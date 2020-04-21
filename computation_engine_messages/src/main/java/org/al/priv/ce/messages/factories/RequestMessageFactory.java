@@ -4,9 +4,12 @@ import org.al.priv.ce.messages.AbstractRequestMessage;
 import org.al.priv.ce.messages.factories.exceptions.InvalidMessageBodyException;
 import org.al.priv.ce.messages.factories.exceptions.InvalidTypeException;
 import org.al.priv.ce.messages.mapper.ObjectMapper;
+import org.al.priv.ce.messages.requests.ErrorRequest;
 import org.al.priv.ce.messages.requests.UpdateConfigurationRequest;
 import org.al.priv.ce.messages.types.RequestType;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RequestMessageFactory {
 
 	public AbstractRequestMessage build(RequestType type, String message) 
@@ -35,6 +38,7 @@ public class RequestMessageFactory {
 	private Class<?> determineRequestMessageClass(RequestType type) {
 		switch(type) {
 			case UPDATE_CONFIGURATION: return UpdateConfigurationRequest.class;
+			case ERROR: return ErrorRequest.class;
 			default: return null;
 		}
 	}

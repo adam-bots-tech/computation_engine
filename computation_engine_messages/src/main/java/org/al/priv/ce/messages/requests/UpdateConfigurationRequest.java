@@ -2,9 +2,11 @@ package org.al.priv.ce.messages.requests;
 
 import java.io.Serializable;
 
+import org.al.priv.ce.messages.AbstractRequestMessage;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UpdateConfigurationRequest implements Serializable {
+public class UpdateConfigurationRequest extends AbstractRequestMessage implements Serializable {
 	
 	private static final long serialVersionUID = 3543403139037247823L;
 	

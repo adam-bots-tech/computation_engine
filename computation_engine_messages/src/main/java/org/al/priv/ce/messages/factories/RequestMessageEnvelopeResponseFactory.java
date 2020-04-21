@@ -3,7 +3,9 @@ package org.al.priv.ce.messages.factories;
 import org.al.priv.ce.messages.envelopes.RequestMessageEnvelope;
 import org.al.priv.ce.messages.envelopes.RequestMessageEnvelopeResponse;
 import org.joda.time.DateTime;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RequestMessageEnvelopeResponseFactory {
 
 	/* *

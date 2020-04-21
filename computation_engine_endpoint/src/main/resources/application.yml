@@ -1,0 +1,13 @@
+computationEngine:
+	messaging:
+		exchange: computations
+		requestQueue: requests
+		payloadQueue: payloads
+		requestRoutingKey: requests
+		payloadsRoutingKey: payloads
+	repository:
+		host: 127.0.0.1
+		port: 9142
+		keyspace: computations
+		
+		

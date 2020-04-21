@@ -1,12 +1,12 @@
-package org.al.priv.ce.messages.payloads;
+package org.al.priv.ce.messages.requests;
 
 import java.io.Serializable;
 
-import org.al.priv.ce.messages.AbstractPayloadMessage;
+import org.al.priv.ce.messages.AbstractRequestMessage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ErrorPayload extends AbstractPayloadMessage implements Serializable {
+public class ErrorRequest extends AbstractRequestMessage implements Serializable {
 
 	private static final long serialVersionUID = 8722155505770605050L;
 

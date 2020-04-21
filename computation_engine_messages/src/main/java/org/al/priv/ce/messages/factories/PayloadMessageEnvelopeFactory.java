@@ -9,7 +9,9 @@ import org.al.priv.ce.messages.mapper.ObjectMapper;
 import org.al.priv.ce.messages.payloads.ConfigurationUpdatedPayload;
 import org.al.priv.ce.messages.payloads.ErrorPayload;
 import org.al.priv.ce.messages.types.PayloadType;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PayloadMessageEnvelopeFactory {
 	
 	public PayloadMessageEnvelope build(AbstractPayloadMessage payload, PayloadMessageEnvelopeMetaData metaData) throws InvalidTypeException, InvalidMessageBodyException {

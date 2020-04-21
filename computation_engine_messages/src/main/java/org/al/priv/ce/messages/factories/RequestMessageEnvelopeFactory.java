@@ -8,7 +8,9 @@ import org.al.priv.ce.messages.factories.exceptions.InvalidTypeException;
 import org.al.priv.ce.messages.mapper.ObjectMapper;
 import org.al.priv.ce.messages.requests.UpdateConfigurationRequest;
 import org.al.priv.ce.messages.types.RequestType;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RequestMessageEnvelopeFactory {
 	
 	public RequestMessageEnvelope build(AbstractRequestMessage request, RequestMessageEnvelopeMetaData metaData) throws InvalidTypeException, InvalidMessageBodyException {
