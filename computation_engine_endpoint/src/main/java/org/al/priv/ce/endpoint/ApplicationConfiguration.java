@@ -2,18 +2,19 @@ package org.al.priv.ce.endpoint;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration("computationEngine")
+@Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties
+@ConfigurationProperties("computation-engine")
 public class ApplicationConfiguration {
 	
 	// MESSAGING CONFIG
 	
 	private Messaging messaging;
 
-	public class Messaging {
+	public static class Messaging {
 		private String exchange;
 		private String payloadQueue;
 		private String requestQueue;
@@ -62,7 +63,7 @@ public class ApplicationConfiguration {
 	
 	private Repository repository;
 	
-	public class Repository {
+	public static class Repository {
 		private String host;
 		private int port;
 		private String keyspace;

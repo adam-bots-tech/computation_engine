@@ -3,13 +3,18 @@
   <parent>
     <groupId>org.al.private</groupId>
     <artifactId>computation_engine</artifactId>
-    <version>${revision}</version>
+    <version>1.0.0</version>
   </parent>
+  <packaging>jar</packaging>
   <artifactId>computation_engine_messages</artifactId>
   <name>Computation Engine Message</name>
   <description>Message definitions for initiating computations</description>
   
   <dependencies>
+	  <dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-context</artifactId>
+	</dependency>
   	<dependency>
     	<groupId>com.fasterxml.jackson.core</groupId>
     	<artifactId>jackson-annotations</artifactId>

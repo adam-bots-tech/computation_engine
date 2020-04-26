@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.al.private</groupId>
   <artifactId>computation_engine</artifactId>
-  <version>${revision}</version>
+  <version>1.0.0</version>
   <packaging>pom</packaging>
   <name>Computation Engine</name>
   <description>Master pom file for all computation engine projects</description>
@@ -22,7 +22,6 @@
 	<dependency>
     	<groupId>org.apache.commons</groupId>
     	<artifactId>commons-lang3</artifactId>
-    	<version>3.5</version>
 	</dependency>
   </dependencies>
   

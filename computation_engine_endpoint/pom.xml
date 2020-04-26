@@ -5,8 +5,9 @@
 	<parent>
 		<groupId>org.al.private</groupId>
 		<artifactId>computation_engine</artifactId>
-		<version>${revision}</version>
+		<version>1.0.0</version>
 	</parent>
+	<packaging>jar</packaging>
 	<artifactId>computation_engine_endpoint</artifactId>
 	<name>Computation Engine Endpoint</name>
 	<description>Endpoint for receiving computation requests and allowing the retrieval of computation payloads.</description>
@@ -52,7 +53,7 @@
 		<dependency>
 			<groupId>org.al.private</groupId>
 			<artifactId>computation_engine_messages</artifactId>
-			<version>${revision}</version>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 	

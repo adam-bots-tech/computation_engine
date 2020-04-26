@@ -28,6 +28,7 @@ public class RepositoryConfiguration extends AbstractCassandraConfiguration {
         CassandraClusterFactoryBean cluster = new CassandraClusterFactoryBean();
         cluster.setContactPoints(applicationConfiguration.getRepository().getHost());
         cluster.setPort(applicationConfiguration.getRepository().getPort());
+        cluster.setJmxReportingEnabled(false);
         return cluster;
     }
  
