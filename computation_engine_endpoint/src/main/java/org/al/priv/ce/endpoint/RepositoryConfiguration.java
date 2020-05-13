@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraEntityClassScanner;
+import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 
@@ -22,6 +23,11 @@ public class RepositoryConfiguration extends AbstractCassandraConfiguration {
 	protected String getKeyspaceName() {
 		return applicationConfiguration.getRepository().getKeyspace();
 	}
+	
+	@Override
+    public SchemaAction getSchemaAction() {
+        return SchemaAction.RECREATE_DROP_UNUSED;
+    }
 	
 	@Bean
     public CassandraClusterFactoryBean cluster() {

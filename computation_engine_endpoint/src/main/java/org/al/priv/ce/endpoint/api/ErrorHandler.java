@@ -13,6 +13,8 @@ import org.al.priv.ce.messages.factories.exceptions.InvalidTypeException;
 import org.al.priv.ce.messages.payloads.ErrorPayload;
 import org.al.priv.ce.messages.requests.ErrorRequest;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ErrorHandler {
+	
+	private static final Logger log = LoggerFactory.getLogger(ErrorHandler.class);
 	
 	@Autowired
 	private RequestMessageEnvelopeFactory requestFactory;
@@ -38,6 +42,8 @@ public class ErrorHandler {
 		error.setOriginatingComponent("ENDPOINT");
 		error.setStackTrace(ExceptionUtils.getStackTrace(ex));
 		
+		log.error("Error occured while processing a request: " + ex.getMessage(), ex);
+		
 		return requestFactory.build(error, ex.getMetaData());
 	}
 	
@@ -54,6 +60,8 @@ public class ErrorHandler {
 		PayloadMessageEnvelopeMetaData metaData = new PayloadMessageEnvelopeMetaData();
 		metaData.setMessageId(ex.getMessageId());
 		metaData.updateOnSent();
+		
+		log.error("Error occured while processing a payload: " + ex.getMessage(), ex);
 		
 		return payloadFactory.build(error, metaData);
 	}

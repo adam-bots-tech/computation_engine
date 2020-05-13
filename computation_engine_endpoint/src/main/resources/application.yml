@@ -4,7 +4,7 @@ computation-engine:
       requestQueue: requests
       payloadQueue: payloads
       requestRoutingKey: requests
-      payloadsRoutingKey: payloads
+      payloadRoutingKey: payloads
    repository:
       host: 127.0.0.1
       port: 9042
