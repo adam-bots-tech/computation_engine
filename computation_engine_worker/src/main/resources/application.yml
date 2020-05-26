@@ -1,0 +1,24 @@
+computation-engine:
+   messaging:
+      exchange: computations
+      requestQueue: requests
+      payloadQueue: payloads
+      requestRoutingKey: requests
+      payloadRoutingKey: payloads
+spring:
+   datasource:
+      platform: postgres
+      url: jdbc:postgresql://ce_rabbit:5432/postgres
+      username: postgres
+      password: root
+   jpa:
+      database: POSTGRESQL
+      show-sql: true
+      generate-ddl: true
+      non_context_creation: true
+   rabbitmq:
+      username: guest
+      password: guest
+      host: ce_rabbit
+      port: 5672
+   
