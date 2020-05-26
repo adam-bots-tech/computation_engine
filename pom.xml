@@ -33,6 +33,7 @@
   <modules>
   	<module>computation_engine_messages</module>
   	<module>computation_engine_endpoint</module>
+  	<module>computation_engine_worker</module>
   </modules>
 	
 </project>

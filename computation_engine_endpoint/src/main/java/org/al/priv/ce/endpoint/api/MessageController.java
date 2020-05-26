@@ -37,7 +37,7 @@ public class MessageController {
 		
 		log.info("Receieving request message. Generated Message ID: " + envelope.getMetaData().getMessageId());
 		
-		service.processInboundRequestMessage(envelope);
+		service.processRequestMessage(envelope);
 		
 		return response;
 		

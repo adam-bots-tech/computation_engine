@@ -19,7 +19,7 @@ public class PayloadMessageListener {
 	public void receivePayloadMessage(final PayloadMessageEnvelope envelope) throws EndpointException {
 		log.info("Receiving payload message. (Message ID: "+ envelope.getMetaData().getMessageId() + ")");
 		
-		service.processOutboundPayloadMessage(envelope);
+		service.processPayloadMessage(envelope);
 	}
 
 }

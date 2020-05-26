@@ -31,14 +31,14 @@ public class MessageService {
 	@Autowired
 	private RequestMessageSender sender;
 	
-	public void processInboundRequestMessage(RequestMessageEnvelope envelope) throws RequestException {
+	public void processRequestMessage(RequestMessageEnvelope envelope) throws RequestException {
 		try {
 			
 			ObjectMapper mapper = new ObjectMapper();
 			
 			RequestMessageRecord record = new RequestMessageRecord();
 			record.setMessageId(envelope.getMetaData().getMessageId());
-			record.setMessage(mapper.writeValueAsString(envelope));
+			record.setMessage(mapper.writeValueAsString(envelope.getMessage()));
 			
 			log.info("Storing request message. (Message ID: " + envelope.getMetaData().getMessageId() + ")");
 			requestRepository.save(record);
@@ -51,14 +51,14 @@ public class MessageService {
 		}
 	}
 	
-	public void processOutboundPayloadMessage(PayloadMessageEnvelope envelope) throws EndpointException {
+	public void processPayloadMessage(PayloadMessageEnvelope envelope) throws EndpointException {
 		try {
 			
 			ObjectMapper mapper = new ObjectMapper();
 			
 			PayloadMessageRecord record = new PayloadMessageRecord();
 			record.setMessageId(envelope.getMetaData().getMessageId());
-			record.setMessage(mapper.writeValueAsString(envelope));
+			record.setMessage(mapper.writeValueAsString(envelope.getMessage()));
 			
 			log.info("Storing payload. (Message ID: " + envelope.getMetaData().getMessageId() + ")");
 			payloadRepository.save(record);
