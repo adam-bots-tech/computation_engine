@@ -3,6 +3,7 @@ package org.al.priv.ce.endpoint.api;
 import org.al.priv.ce.endpoint.exceptions.PayloadException;
 import org.al.priv.ce.endpoint.exceptions.PayloadMissingException;
 import org.al.priv.ce.endpoint.exceptions.RequestException;
+import org.al.priv.ce.messages.enums.MessageTypes;
 import org.al.priv.ce.messages.envelopes.PayloadMessageEnvelope;
 import org.al.priv.ce.messages.envelopes.PayloadMessageEnvelopeMetaData;
 import org.al.priv.ce.messages.envelopes.RequestMessageEnvelope;
@@ -44,7 +45,7 @@ public class ErrorHandler {
 		
 		log.error("Error occured while processing a request: " + ex.getMessage(), ex);
 		
-		return requestFactory.build(error, ex.getMetaData());
+		return requestFactory.build(error, ex.getMetaData(), MessageTypes.ERROR_REQUEST);
 	}
 	
 	@ExceptionHandler(PayloadException.class)
@@ -63,7 +64,7 @@ public class ErrorHandler {
 		
 		log.error("Error occured while processing a payload: " + ex.getMessage(), ex);
 		
-		return payloadFactory.build(error, metaData);
+		return payloadFactory.build(error, metaData, MessageTypes.ERROR_REQUEST);
 	}
 	
 	@ExceptionHandler(PayloadMissingException.class)
@@ -80,6 +81,6 @@ public class ErrorHandler {
 		metaData.setMessageId(ex.getMessageId());
 		metaData.updateOnSent();
 		
-		return payloadFactory.build(error, metaData);
+		return payloadFactory.build(error, metaData, MessageTypes.ERROR_REQUEST);
 	}
 }

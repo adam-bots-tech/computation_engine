@@ -8,7 +8,7 @@ computation-engine:
 spring:
    datasource:
       platform: postgres
-      url: jdbc:postgresql://ce_rabbit:5432/postgres
+      url: jdbc:postgresql://ce_postgres:5432/postgres
       username: postgres
       password: root
    jpa:

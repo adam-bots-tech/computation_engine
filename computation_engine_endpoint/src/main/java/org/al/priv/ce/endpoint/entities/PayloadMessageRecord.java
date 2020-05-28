@@ -2,6 +2,7 @@ package org.al.priv.ce.endpoint.entities;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
@@ -13,6 +14,7 @@ public class PayloadMessageRecord implements Serializable {
 
 	private static final long serialVersionUID = 142315452142453415L;
 
+	@Id
 	@PrimaryKeyColumn(
 			name = "message_id", 
 			type = PrimaryKeyType.PARTITIONED, 

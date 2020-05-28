@@ -1,11 +1,13 @@
 package org.al.priv.ce.worker.services;
 
 import org.al.priv.ce.worker.exceptions.PayloadException;
+import org.al.priv.ce.worker.exceptions.RequestException;
 import org.al.priv.ce.worker.messaging.PayloadMessageSender;
 import org.al.priv.ce.worker.services.MessageService;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.joda.time.DateTime;
 import org.al.priv.ce.messages.AbstractPayloadMessage;
+import org.al.priv.ce.messages.enums.MessageTypes;
 import org.al.priv.ce.messages.envelopes.PayloadMessageEnvelope;
 import org.al.priv.ce.messages.envelopes.PayloadMessageEnvelopeMetaData;
 import org.al.priv.ce.messages.envelopes.RequestMessageEnvelope;
@@ -33,7 +35,7 @@ public class MessageService {
 	
 	private static final Logger log = LoggerFactory.getLogger(MessageService.class);
 
-	public void processRequestMessage(RequestMessageEnvelope envelope) {
+	public void processRequestMessage(RequestMessageEnvelope envelope) throws RequestException {
 		
 		AbstractPayloadMessage payload = null;
 		
@@ -65,7 +67,8 @@ public class MessageService {
 		metaData.setDateProcessed(DateTime.now());
 		
 		try {
-			PayloadMessageEnvelope payloadEnvelope = payloadFactory.build(payload, metaData);
+			PayloadMessageEnvelope payloadEnvelope = payloadFactory.build(payload, metaData, 
+					MessageTypes.UPDATE_CONFIGURATION);
 			sender.send(payloadEnvelope);
 		}
 		catch(InvalidTypeException ex) {
@@ -76,12 +79,13 @@ public class MessageService {
 			payload = buildErrorPayload(payEx);
 			
 			try {
-				PayloadMessageEnvelope payloadEnvelope = payloadFactory.build(payload, metaData);
+				PayloadMessageEnvelope payloadEnvelope = payloadFactory.build(payload, metaData, MessageTypes.ERROR_PAYLOAD);
 				sender.send(payloadEnvelope);
 			}
 			catch(InvalidTypeException innerEx) {
 				log.error("Error message type not supported in factories. Cannot create any message to send.");
-				return;
+				throw new RequestException("Error message type not supported in factories. Cannot create any message to send.", ex, 
+						envelope.getMetaData());
 			}
 		}
 	}

@@ -6,8 +6,6 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -16,11 +14,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+
 @SpringBootApplication
 @ComponentScan(basePackages = {
 		"org.al.priv.ce.messages.factories", 
-		"org.al.priv.ce.endpoint"})
-@EnableJpaRepositories(basePackages = "org.al.priv.ce.endpoint.repositories")
+		"org.al.priv.ce.worker"})
+@EnableJpaRepositories(basePackages = "org.al.priv.ce.worker.repositories")
 public class Application {
 	
 	@Autowired
@@ -66,21 +67,7 @@ public class Application {
 
 	@Bean
 	public Jackson2JsonMessageConverter producerJackson2MessageConverter() {
-	    return new Jackson2JsonMessageConverter();
+		ObjectMapper mapper = new ObjectMapper().registerModule(new JodaModule());
+	    return new Jackson2JsonMessageConverter(mapper);
 	}
-	
-	@Bean
-	SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-	      MessageListenerAdapter listenerAdapter) {
-	    SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-	    container.setConnectionFactory(connectionFactory);
-	    container.setQueueNames(applicationConfiguration.getMessaging().getPayloadQueue());
-	    container.setMessageListener(listenerAdapter);
-	    return container;
-	}
-
-	/*@Bean
-	MessageListenerAdapter listenerAdapter(PayloadMessageListener listener) {
-	    return new MessageListenerAdapter(listener, "receivePayloadMessage");
-	}*/
 }

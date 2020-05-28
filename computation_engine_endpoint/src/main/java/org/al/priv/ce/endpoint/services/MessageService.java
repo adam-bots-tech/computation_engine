@@ -1,8 +1,9 @@
 package org.al.priv.ce.endpoint.services;
 
+import java.util.Optional;
+
 import org.al.priv.ce.endpoint.entities.PayloadMessageRecord;
 import org.al.priv.ce.endpoint.entities.RequestMessageRecord;
-import org.al.priv.ce.endpoint.exceptions.EndpointException;
 import org.al.priv.ce.endpoint.exceptions.PayloadException;
 import org.al.priv.ce.endpoint.exceptions.PayloadMissingException;
 import org.al.priv.ce.endpoint.exceptions.RequestException;
@@ -38,7 +39,7 @@ public class MessageService {
 			
 			RequestMessageRecord record = new RequestMessageRecord();
 			record.setMessageId(envelope.getMetaData().getMessageId());
-			record.setMessage(mapper.writeValueAsString(envelope.getMessage()));
+			record.setMessage(mapper.writeValueAsString(envelope));
 			
 			log.info("Storing request message. (Message ID: " + envelope.getMetaData().getMessageId() + ")");
 			requestRepository.save(record);
@@ -51,27 +52,32 @@ public class MessageService {
 		}
 	}
 	
-	public void processPayloadMessage(PayloadMessageEnvelope envelope) throws EndpointException {
+	public void processPayloadMessage(PayloadMessageEnvelope envelope) throws PayloadException {
 		try {
 			
 			ObjectMapper mapper = new ObjectMapper();
 			
 			PayloadMessageRecord record = new PayloadMessageRecord();
 			record.setMessageId(envelope.getMetaData().getMessageId());
-			record.setMessage(mapper.writeValueAsString(envelope.getMessage()));
+			record.setMessage(mapper.writeValueAsString(envelope));
 			
 			log.info("Storing payload. (Message ID: " + envelope.getMetaData().getMessageId() + ")");
 			payloadRepository.save(record);
 		}
 		catch(Throwable ex) {
-			throw new EndpointException("Failed to process payloadMessageEnvelope. (Message ID: " + 
-					envelope.getMetaData().getMessageId() + ")", ex);
+			throw new PayloadException("Failed to process payloadMessageEnvelope. (Message ID: " + 
+					envelope.getMetaData().getMessageId() + ")", ex, envelope.getMetaData().getMessageId());
 		}
 	}
 	
 	public PayloadMessageEnvelope getStoredPayload(long messageId) throws PayloadException, PayloadMissingException {
 		try {
-			PayloadMessageRecord record = payloadRepository.findById(messageId).get();
+			Optional<PayloadMessageRecord> optional = payloadRepository.findById(messageId);
+			
+			if (optional == null || !optional.isPresent())
+				throw new PayloadMissingException("Payload has not been delivered by the engine.", messageId);
+			
+			PayloadMessageRecord record = optional.get();
 			
 			if (record == null)
 				throw new PayloadMissingException("Payload has not been delivered by the engine.", messageId);
